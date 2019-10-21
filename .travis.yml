@@ -1,0 +1,20 @@
+sudo: required
+services:
+- docker
+language: minimal
+env:
+  global:
+  - COMMIT=${TRAVIS_COMMIT::8}
+  - GH_REPO=qcif/omeka-s-docker
+  - secure: UNAqlynE2bVzQMMFcgoUDHExfmMLbz2Io/SNPgWuQH3+xmYNiRhHF0ZbuQwV9k4Mno0Ca4SPhJvo+ldIxdUL9FBTR/dHXKNieJzlFntQ5XUZ6Y7einJhudmPHrP4xiHuurmhzzJ/d0x7BB84ADJ5GCllmzZm/TLpS4CrG/T8SoIo/y8H/hf4sRzHMp1TTWSbK1exHmxhyTXXAds0V+g6mRVVL9n8tMHg8UOcL1WEL1JkNNuelufRzgno4feMEsF0l2MI1aJn+geGdUHfYbIDf4VThuD7+Umh7svXZ+rgk8wf8+CNADC38bt5lQp3sxcHzk8eXjfT14lq0BD6hGiF3aALyS+tMbhQvF12rVNQ9+gdCMlQXe8mHHGlqnZFFP2juAJuNe1EzK3q9I+FCpXrxYESWHtNc9fG/ZB2sHDwfGUOnh2VR9bCbV/hRxfsfBdLG3qhsEcE5wfUWwqGPxmjX/JcYL+imK8MIdFpZP3bGQzJ5N7EQroCRL+OhaWnXOA8/ewt1tfD7BGEKQVY1N4IYSw6mIZWsUk6H0xxBvEi9nAKdWDFjTybVTym5zv3BNwkY9h+ImPO+I8C1mCsT6/Pq63MDfpaJjOghp+uifhBaLPlaXebud3wtGqLLPX9qosNMS0LtjAneIAnw/Aa0J86Ulo6FsC34w31koaeX6WH1CI=
+  - secure: PxWvtg/Nbep39KJ+WqX9YiiZMpkiDLH5wWqQuXaljnBlL01HrAoKidZp051a2P7zHquVHh0C7pggcXgqoemXMTTYLY+/rEGtmhkjRWhzCT/KeEn9agvz4USyeV3vaJ0IMOAZqopAKzBbvn26rZMnwWp+bV0vC5DP9035QW2Ejn2yJ2M83Dh2890w4GxiIWOm/qnEgEaBhL7vRIaBTjQNT7CL/2yTldhAPkp+VFOWtb4e91afV+TlMGacNsW70wq6ZqJLzUSYpUdv4AxJurBv130SOTdLh99oT+yRG8QY+n2FygJj5i35YLLHjdM2TmW8y4o2M4wvlCrAGTor3xbFR/nJHt+uRerYQX4Q2veMbbuynBBF1kQX284Gdk19HZ9Uuf/OqWAHX6nX9tIWdxSNfYfnzq0WESRy2hxRZjZqJY1YhLIYhtqsvdjn1ytPcbkn4uKtygB8l7dGNzsN5vrDfsUPCmIdkQUUG1lcpVzpc+sUFHASbK5U1R6l5egoxoUTp5EzC0h+ylgnGDgDhPgMW0T2dasvrWIHR/F3Z5VXscaWLFsILZZcuKyxD8Guj/8KGiHHUmuS450gJFmTSwUaitNSQo2LICA62I4T3nRyMAtCCV4U9SYbRt5JtJOJsLEdNXbNd+I55YwTjTsDwRlNgFsO6KCymJnjhTIRisrG3i8=
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.9
+jobs:
+  include:
+  - stage: Build and deploy
+    script: if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash dockerhub_deploy.sh; fi
